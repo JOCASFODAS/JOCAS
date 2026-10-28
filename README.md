@@ -46,24 +46,11 @@ da Steam não são redistribuídos.
 - No modificador, **Natural** transmite a voz original. Perfis personalizados com
   tom zero podem conservar sua voz; a seleção do microfone físico no Discord
   também transmite a entrada original. A centralização no GitHub não altera isso.
-  O diagnóstico de entrada e a proteção dos perfis estão no [plano de ideias](IDEIAS.md).
 - A edição Windows do modificador foi compilada; chamada real no Discord,
   execução da IA no Windows e hardware VB-CABLE ainda precisam de validação.
 - O mod declara faixas abertas de versões, mas não promete funcionamento em todos
   os lançamentos intermediários ou futuros. A faixa 26+ não é uma garantia.
 - GNOME, Hyprland e outras distribuições não foram validados no JOCAS Wallpapers.
-
-## Ideias para as próximas criações
-
-Veja [IDEIAS.md](IDEIAS.md). Prioridades sugeridas:
-
-1. **JOCAS Central** — reunir downloads, versões, backups e atualizações dos apps.
-2. **Modificador: conferir a voz enviada** — mostrar a entrada do Discord e evitar
-   perfis modificados que mantenham o tom original por engano.
-3. **JOCAS Doutor do Modpack** — combinar mods + logs em um relatório revisável
-   antes de copiar para o GPT, sem modificar o modpack automaticamente.
-
-São propostas; não são recursos já implementados.
 
 ## Código e contribuição
 

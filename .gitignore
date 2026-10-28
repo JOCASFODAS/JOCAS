@@ -45,3 +45,6 @@ Wallpapers.conf
 *.mp3
 *.raw
 *.pid
+
+# Planejamento pessoal fora da publicação
+/IDEIAS.md
