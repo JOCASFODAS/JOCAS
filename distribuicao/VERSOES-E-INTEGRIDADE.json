@@ -1,0 +1,120 @@
+{
+  "produtos": {
+    "JOCAS Lista de Mods": {
+      "Atualizacao": {
+        "versao": "1.0.0",
+        "arquivo": "JOCAS-Lista-de-Mods-1.0.0-Atualizacao.zip"
+      },
+      "Fontes": {
+        "versao": "1.0.0",
+        "arquivo": "JOCAS-Lista-de-Mods-1.0.0-Fontes.zip"
+      },
+      "Instalacao": {
+        "versao": "1.0.0",
+        "arquivo": "JOCAS-Lista-de-Mods-1.0.0-Instalacao.zip"
+      }
+    },
+    "JOCAS Wallpapers": {
+      "Atualizacao": {
+        "versao": "1.0.0",
+        "arquivo": "JOCAS-Wallpapers-1.0.0-CachyOS-KDE-Wayland-x64-Atualizacao.zip"
+      },
+      "Instalacao": {
+        "versao": "1.0.0",
+        "arquivo": "JOCAS-Wallpapers-1.0.0-CachyOS-KDE-Wayland-x64-Instalacao.zip"
+      },
+      "Fontes": {
+        "versao": "1.0.0",
+        "arquivo": "JOCAS-Wallpapers-1.0.0-Fontes.zip"
+      }
+    },
+    "Modificador de Voz JOCAS": {
+      "Atualizacao": {
+        "versao": "1.4.1",
+        "arquivo": "Modificador-de-Voz-JOCAS-1.4.1-Atualizacao.zip"
+      },
+      "Fontes": {
+        "versao": "1.4.1",
+        "arquivo": "Modificador-de-Voz-JOCAS-1.4.1-Fontes.zip"
+      },
+      "Instalacao": {
+        "versao": "1.4.1",
+        "arquivo": "Modificador-de-Voz-JOCAS-1.4.1-Instalacao.zip"
+      }
+    }
+  },
+  "arquivos": [
+    {
+      "nome": "JOCAS-Lista-de-Mods-1.0.0-Atualizacao.zip",
+      "produto": "JOCAS Lista de Mods",
+      "versao": "1.0.0",
+      "tipo": "Atualizacao",
+      "bytes": 110303,
+      "sha256": "99f923bc52718ceb8ab926f63679de2b1c064534d6836019f146bf83ca0a8cc0"
+    },
+    {
+      "nome": "JOCAS-Lista-de-Mods-1.0.0-Fontes.zip",
+      "produto": "JOCAS Lista de Mods",
+      "versao": "1.0.0",
+      "tipo": "Fontes",
+      "bytes": 23974,
+      "sha256": "d476b55b495b9764fead424ccfd769e1edefd814425088fd067a5e69cc19298b"
+    },
+    {
+      "nome": "JOCAS-Lista-de-Mods-1.0.0-Instalacao.zip",
+      "produto": "JOCAS Lista de Mods",
+      "versao": "1.0.0",
+      "tipo": "Instalacao",
+      "bytes": 130926,
+      "sha256": "7476ade962dc90de99d380df243542e07cc7af537b2cb895c4f74cdcd5628e24"
+    },
+    {
+      "nome": "JOCAS-Wallpapers-1.0.0-CachyOS-KDE-Wayland-x64-Atualizacao.zip",
+      "produto": "JOCAS Wallpapers",
+      "versao": "1.0.0",
+      "tipo": "Atualizacao",
+      "bytes": 143168836,
+      "sha256": "d41aee1745538f2e50a84fee6f0256f2efbd051049a8ad54b104bef1370bb0a6"
+    },
+    {
+      "nome": "JOCAS-Wallpapers-1.0.0-CachyOS-KDE-Wayland-x64-Instalacao.zip",
+      "produto": "JOCAS Wallpapers",
+      "versao": "1.0.0",
+      "tipo": "Instalacao",
+      "bytes": 143168811,
+      "sha256": "e36a6bbd62d4520dd3f733ad5485002683bf7e81c55b83a029f6b3bff225e47d"
+    },
+    {
+      "nome": "JOCAS-Wallpapers-1.0.0-Fontes.zip",
+      "produto": "JOCAS Wallpapers",
+      "versao": "1.0.0",
+      "tipo": "Fontes",
+      "bytes": 28400897,
+      "sha256": "1ce934c7e424e8493dff445df1addf7838ee2fbe8d88545dc389db8e9d6f4694"
+    },
+    {
+      "nome": "Modificador-de-Voz-JOCAS-1.4.1-Atualizacao.zip",
+      "produto": "Modificador de Voz JOCAS",
+      "versao": "1.4.1",
+      "tipo": "Atualizacao",
+      "bytes": 66599451,
+      "sha256": "2ae48e09ab6c7f0b4640cca74a8e4cd7a8c643aa4297b44c1eb9a8c96e17c454"
+    },
+    {
+      "nome": "Modificador-de-Voz-JOCAS-1.4.1-Fontes.zip",
+      "produto": "Modificador de Voz JOCAS",
+      "versao": "1.4.1",
+      "tipo": "Fontes",
+      "bytes": 437769,
+      "sha256": "58b34e3b2bff97dd75639ff94ccae4435e1c42fef48b0d5f926b8d7431793831"
+    },
+    {
+      "nome": "Modificador-de-Voz-JOCAS-1.4.1-Instalacao.zip",
+      "produto": "Modificador de Voz JOCAS",
+      "versao": "1.4.1",
+      "tipo": "Instalacao",
+      "bytes": 66982338,
+      "sha256": "a8b32da0faab420cadb2373654bb24a04d379d9752b33b37ebf7944a5d4f3cd7"
+    }
+  ]
+}

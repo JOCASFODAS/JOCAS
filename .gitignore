@@ -1,0 +1,47 @@
+# Dados e credenciais
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+*Gepetas.conf
+Wallpapers.conf
+*.lock.local
+# Ambientes, caches e builds
+**/__pycache__/
+**/.venv/
+**/venv/
+**/node_modules/
+**/work/
+**/build/
+**/dist/
+**/vendor/
+*.pyc
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.so.*
+*.AppImage
+*.jar
+**/gepetas
+**/jocas-wallpapers
+# Downloads e modelos; releases são publicadas fora do histórico Git
+/Downloads e Atualizações/
+*.zip
+*.onnx
+*.onnx.json
+*.safetensors
+*.pth
+*.pt
+*.gguf
+**/ai/tools/uv
+**/ai/tools/uv.exe
+# Capturas pessoais e registros locais
+*.log
+*.wav
+*.mp3
+*.raw
+*.pid

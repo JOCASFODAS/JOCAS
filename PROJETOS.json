@@ -1,0 +1,42 @@
+{
+  "repositorio": "JOCASFODAS/JOCAS",
+  "produtos": [
+    {
+      "nome": "Modificador de Voz JOCAS",
+      "versao": "1.4.1",
+      "pasta": "Modificador de Voz JOCAS/outputs/Gepetas",
+      "tag": "voz-v1.4.1",
+      "sistemas": [
+        "Linux x64",
+        "Windows 11 x64 (compilado; hardware não validado)"
+      ]
+    },
+    {
+      "nome": "JOCAS Lista de Mods",
+      "versao": "1.0.0",
+      "pasta": "JOCAS Lista de Mods",
+      "tag": "modlist-v1.0.0",
+      "carregadores": [
+        "Fabric",
+        "Forge",
+        "NeoForge"
+      ],
+      "sistemas": [
+        "Minecraft Java; consulte COMPATIBILIDADE.md"
+      ]
+    },
+    {
+      "nome": "JOCAS Wallpapers",
+      "versao": "1.0.0",
+      "pasta": "JOCAS Wallpapers",
+      "tag": "wallpapers-v1.0.0",
+      "sistemas": [
+        "CachyOS x64 / KDE Plasma / Wayland"
+      ],
+      "motor": {
+        "repositorio": "ZenoMetal/linux-wallpaperengine-kde-desktop",
+        "commit": "2f41e329d021c1c4c5f765df1a7af8423ffb0ba0"
+      }
+    }
+  ]
+}

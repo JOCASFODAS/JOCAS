@@ -1,0 +1,17 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="MIT"
+[[mods]]
+modId="jocas_modlist"
+version="1.0.0"
+displayName="JOCAS Lista de Mods"
+authors="JOCAS"
+displayTest="IGNORE_ALL_VERSION"
+description='''Lista os mods do modpack e abre uma janela auxiliar com botão para copiar o relatório.'''
+[[dependencies.jocas_modlist]]
+modId="minecraft"
+mandatory=true
+type="required"
+versionRange="[1.20.2,)"
+ordering="NONE"
+side="BOTH"

@@ -1,0 +1,12 @@
+name: Sugerir uma ideia
+description: Proponha uma criação ou atualização JOCAS.
+title: '[Ideia] '
+body:
+  - type: textarea
+    id: ideia
+    attributes: {label: Qual problema você quer resolver?}
+    validations: {required: true}
+  - type: textarea
+    id: uso
+    attributes: {label: Como você imagina usando isso?}
+    validations: {required: true}

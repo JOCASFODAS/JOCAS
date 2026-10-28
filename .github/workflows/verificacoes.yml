@@ -1,0 +1,21 @@
+name: Verificações da central
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  arquivos-e-catalogo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Conferir arquivos e metadados
+        run: python tools/verificar_publicacao.py
+      - name: Testar catálogo
+        run: python -m unittest discover -s Ferramentas/Entregas -p 'test_*.py'
+      - name: Testar contrato de IA sem API real
+        run: python 'Modificador de Voz JOCAS/outputs/Gepetas/tests/ai_protocol_test.py'

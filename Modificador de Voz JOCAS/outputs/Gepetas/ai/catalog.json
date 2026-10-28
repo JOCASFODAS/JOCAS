@@ -1,0 +1,75 @@
+{
+  "voices": {
+    "cadu": {
+      "label": "Cadu \u2022 Portugu\u00eas BR",
+      "files": [
+        {
+          "name": "pt_BR-cadu-medium.onnx",
+          "url": "https://huggingface.co/rhasspy/piper-voices/resolve/5041a7a49ae5b3a0f30e6837769eb03fdbb231bd/pt/pt_BR/cadu/medium/pt_BR-cadu-medium.onnx",
+          "sha256": "765f0809a6ea9035d4a6d0d008dbf8876e68b2dd32029312672fa8f405bdb535"
+        },
+        {
+          "name": "pt_BR-cadu-medium.onnx.json",
+          "url": "https://huggingface.co/rhasspy/piper-voices/resolve/5041a7a49ae5b3a0f30e6837769eb03fdbb231bd/pt/pt_BR/cadu/medium/pt_BR-cadu-medium.onnx.json",
+          "sha256": "5fe03aa3d4901880554905b12075713cd552598c8a350455a1ec73f8b4e6be19"
+        },
+        {
+          "name": "MODEL_CARD",
+          "url": "https://huggingface.co/rhasspy/piper-voices/resolve/5041a7a49ae5b3a0f30e6837769eb03fdbb231bd/pt/pt_BR/cadu/medium/MODEL_CARD",
+          "sha256": "b867e819f48365b592c7789f71bba5ca79e1cb3b8a499853485db417d8031427"
+        }
+      ]
+    },
+    "jeff": {
+      "label": "Jeff \u2022 Portugu\u00eas BR",
+      "files": [
+        {
+          "name": "pt_BR-jeff-medium.onnx",
+          "url": "https://huggingface.co/rhasspy/piper-voices/resolve/5041a7a49ae5b3a0f30e6837769eb03fdbb231bd/pt/pt_BR/jeff/medium/pt_BR-jeff-medium.onnx",
+          "sha256": "3a6f4c46355813c2b7bbc4d16b6d13d60ed72074b952a393baace82a7d0c94b5"
+        },
+        {
+          "name": "pt_BR-jeff-medium.onnx.json",
+          "url": "https://huggingface.co/rhasspy/piper-voices/resolve/5041a7a49ae5b3a0f30e6837769eb03fdbb231bd/pt/pt_BR/jeff/medium/pt_BR-jeff-medium.onnx.json",
+          "sha256": "7bf8145b572b36806f5ce0f1d3322b6711975bc7d0473e8d36fced4a9ec0030d"
+        },
+        {
+          "name": "MODEL_CARD",
+          "url": "https://huggingface.co/rhasspy/piper-voices/resolve/5041a7a49ae5b3a0f30e6837769eb03fdbb231bd/pt/pt_BR/jeff/medium/MODEL_CARD",
+          "sha256": "acdea1b233a478a8ce3bac1f4886a14c8bb6a6287cefb41a26a657a3a7418b08"
+        }
+      ]
+    }
+  },
+  "recognizer": {
+    "base": {
+      "files": [
+        {
+          "name": "model.bin",
+          "url": "https://huggingface.co/Systran/faster-whisper-base/resolve/ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66/model.bin",
+          "sha256": "d01c3014881c9c6f3133c182f3d2887eb6ca1c789a7538c5c007196857a0a6a9"
+        },
+        {
+          "name": "config.json",
+          "url": "https://huggingface.co/Systran/faster-whisper-base/resolve/ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66/config.json",
+          "sha256": "56a6d8110d311f19c8f0471e562832c7527f146b567275bfca59fcf7c184da9a"
+        },
+        {
+          "name": "tokenizer.json",
+          "url": "https://huggingface.co/Systran/faster-whisper-base/resolve/ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66/tokenizer.json",
+          "sha256": "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab"
+        },
+        {
+          "name": "vocabulary.txt",
+          "url": "https://huggingface.co/Systran/faster-whisper-base/resolve/ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66/vocabulary.txt",
+          "sha256": "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913"
+        },
+        {
+          "name": "README.md",
+          "url": "https://huggingface.co/Systran/faster-whisper-base/resolve/ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66/README.md",
+          "sha256": "b922acef3616e27b1d416260b63ba7114c732f0315012006781af2da69cd1ebf"
+        }
+      ]
+    }
+  }
+}

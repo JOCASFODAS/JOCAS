@@ -1,0 +1,18 @@
+{
+  "product": "JOCAS Wallpapers",
+  "version": "1.0.0",
+  "platform": "CachyOS x64, KDE Plasma/KWin 6.8.1, Qt 6.12, Wayland",
+  "engine_source": "https://github.com/ZenoMetal/linux-wallpaperengine-kde-desktop",
+  "engine_commit": "2f41e329d021c1c4c5f765df1a7af8423ffb0ba0",
+  "wayland_compiled": true,
+  "configured_fps_limit": 30,
+  "muted": true,
+  "kde_active_state": true,
+  "user_confirmed_animation_and_visible_icons": true,
+  "stacking_regression": "passed",
+  "qml_pointer_preservation": "3 passed, 0 failed",
+  "dbus_mouse_transport": "passed; forwarding disabled in installed configuration",
+  "fullscreen_detection": "not supported by compositor through the engine protocol",
+  "other_wallpapers": "not exhaustively tested",
+  "new_login": "not tested"
+}

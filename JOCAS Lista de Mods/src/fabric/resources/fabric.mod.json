@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "id": "jocas_modlist",
+  "version": "1.0.0",
+  "name": "JOCAS Lista de Mods",
+  "description": "Lista os mods do modpack e abre uma janela auxiliar para copiar o relatório.",
+  "authors": ["JOCAS"],
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {"main": ["br.jocas.modlist.FabricEntry"]},
+  "depends": {"fabricloader": ">=0.14.21", "minecraft": ">=1.20.1", "java": ">=17"}
+}

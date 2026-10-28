@@ -1,0 +1,88 @@
+{
+  "version": "1.4.1",
+  "date": "2026-10-23",
+  "native_linux_build": "passed: same shared UI and audio sources; Qt/Pulse/Rubber Band",
+  "windows_native_build": "passed: MinGW x64, same UI/audio/DSP/AI bridge; native WASAPI, no Wine",
+  "tests_passed": [
+    "DSP 44.1/48/96 kHz",
+    "clarity, gate and limiter",
+    "modified-only shifted DSP",
+    "profile migration/custom persistence",
+    "PCM formats",
+    "Discord routing with simulated server",
+    "AI API protocol: 6 mocked tests, no live key or charges",
+    "native AI bridge: VAD, no raw voice leakage, generated audio resampling, stale results discarded after mute/unmute, resume and child failure silence",
+    "AI panel: session-only key, consent reset, settings persistence and validation",
+    "Prepare IA button: isolated Python 3.12 + hash-locked dependencies successfully installed",
+    "Windows Python dependency wheels available and resolver dry run with hash constraints passed; not executed on Windows",
+    "1.4.1 live mode switch regression + AI panel click/validation/preferences tests + existing Linux audio integration rerun"
+  ],
+  "ai_local_pipeline": {
+    "local_repeat_seconds": 2.319,
+    "synthetic_transcript": "Olá pessoal, esta é a minha nova voz, vamos jogar juntos hoje!",
+    "input_duration_seconds": 5.340583333333333,
+    "virtual": {
+      "during_original_rms": 0.0,
+      "generated_rms": 0.08797681331634521,
+      "peak": 0.9700000286102295
+    },
+    "listen": {
+      "during_original_rms": 0.0,
+      "generated_rms": 0.04402941092848778,
+      "peak": 0.48500001430511475
+    },
+    "passed": true
+  },
+  "linux_effects_integration": {
+    "passed": true,
+    "metrics": {
+      "off_before": {
+        "virtual_rms": 0.15378321707248688,
+        "listen_rms": 0.0,
+        "frequency_hz": 165.0
+      },
+      "on": {
+        "virtual_rms": 0.15301154553890228,
+        "listen_rms": 0.07650604099035263,
+        "frequency_hz": 165.0
+      },
+      "off_after": {
+        "virtual_rms": 0.1536695808172226,
+        "listen_rms": 0.0,
+        "frequency_hz": 165.0
+      },
+      "muted": {
+        "virtual_rms": 0.0,
+        "listen_rms": 0.0,
+        "frequency_hz": 0.0
+      }
+    }
+  },
+  "ai_models": {
+    "recognizer": "Faster Whisper Base multilingual, CPU int8, pinned revision and SHA-256",
+    "voices": "Piper pt_BR Cadu and Jeff medium; pinned revision and SHA-256; user may import compatible eSpeak/text ONNX + JSON",
+    "runtime": "isolated Python 3.12; faster-whisper 1.2.1; piper-tts 1.8.0; universal requirements.lock with exact versions and hashes"
+  },
+  "ai_api": "OpenAI gpt-4o-mini-transcribe -> gpt-4o-mini-tts; 13 built-in voices or existing custom voice ID; raw mono PCM 24kHz response. API mode mocked only, not live tested. Rio is not in public TTS voice list. Key in session memory and child environment only; consent reset on launch.",
+  "ai_privacy": "Local inference loads only local model paths. No app recordings or transcript logs. Explicit download button is separate. API transmission needs key and per-session consent. No original mic fallback when synthesis fails.",
+  "ai_limits": "Phrase detection ends after 650ms quiet or 12s limit. 2 queued input phrases plus active request; max 30s generated output queued. AI text can contain recognition errors. Effects/EQ are not applied in AI mode; master volume, monitor and mute remain. No voice training or WAV/RVC import.",
+  "unverified": [
+    "real Discord/game call",
+    "human intelligibility in a real call",
+    "live OpenAI API",
+    "Windows 11 hardware, Piper/Faster Whisper execution and VB-CABLE"
+  ],
+  "installed_user_settings": "Existing QSettings IDs and presets retained; no key saved, no capture started automatically. Runtime/models kept under user config, separate from app updates.",
+  "ai_mode_switch_fix": {
+    "cause": "Mode buttons were disabled when audio was running.",
+    "behavior": "Mode buttons remain enabled while running; selecting a different mode requests a muted worker stop, releases the settings, and retains the virtual microphone until resume or close. Clicking the same mode does not stop audio.",
+    "regression_test": {
+      "live": 0.15369635820388794,
+      "paused": 0.0,
+      "resumed": 0.15367871522903442,
+      "passed": true
+    },
+    "additional_assertions": "Same virtual source index during pause and resume, failed API validation keeps that input connected, settings unlock, close cleans up, hardware defaults unchanged. Synthetic fixtures only."
+  },
+  "prior_ai_tests": "Speech helper is byte-for-byte identical to 1.4.0. Local speech pipeline and mocked API results below are retained from 1.4.0; not rerun for this UI/lifecycle fix."
+}

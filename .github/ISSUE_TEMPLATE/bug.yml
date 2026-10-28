@@ -1,0 +1,28 @@
+name: Relatar um problema
+description: Informe um problema em um app ou mod JOCAS.
+title: '[Problema] '
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: 'Não envie senhas, chaves, contas ou logs com dados pessoais. Revise anexos antes de publicar.'
+  - type: dropdown
+    id: produto
+    attributes:
+      label: Produto
+      options: ['Modificador de Voz JOCAS', 'JOCAS Lista de Mods', 'JOCAS Wallpapers']
+    validations: {required: true}
+  - type: input
+    id: versao
+    attributes: {label: Versão do produto e sistema/carregador}
+    validations: {required: true}
+  - type: textarea
+    id: problema
+    attributes: {label: O que aconteceu e como reproduzir?}
+    validations: {required: true}
+  - type: textarea
+    id: esperado
+    attributes: {label: O que deveria acontecer?}
+  - type: textarea
+    id: logs
+    attributes: {label: Trecho revisado do log (opcional), render: text}
