@@ -1,4 +1,4 @@
-# Vozes por IA — JOCAS 1.4.1
+# Vozes por IA — JOCAS 1.4.2
 
 Em **Vozes por IA**, escolha **Usar SEM API** ou **Ativar por API**. O botão
 **Preparar IA** instala Python 3.12 isolado e as dependências fixadas em

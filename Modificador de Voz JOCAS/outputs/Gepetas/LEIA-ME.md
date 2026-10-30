@@ -1,4 +1,24 @@
-# Modificador de Voz JOCAS 1.4.1 — Linux e Windows
+# Modificador de Voz JOCAS 1.4.2 — Linux e Windows
+
+## Correção de cortes ao abrir jogos — 1.4.2
+
+No Linux, o processamento de voz solicita prioridade para sua própria tarefa de áudio,
+com alternativa de prioridade comum se o sistema não permitir tempo real. O envio ao
+microfone virtual e a escuta têm reserva de 200 ms (pré-carga de 160 ms). A leitura
+recupera vários fragmentos por rodada e envia os blocos durante a recuperação, evitando
+que a antiga fila de 100 ms descarte parte da fala. A fila local permanece limitada a
+500 ms para evitar acúmulo de vários segundos em uma saída travada.
+
+Essa proteção acrescenta aproximadamente 100 ms à reserva anterior de envio. O atraso
+real também depende do microfone, dos efeitos, do servidor de áudio e do Discord/jogo.
+Não mistura a voz original, não muda os perfis e não exige fechar o jogo. Selecione
+**JOCAS Microfone** como entrada. O limite físico continua sendo a capacidade do PC:
+travamentos mais longos que a reserva ou desconexões do microfone podem interromper áudio.
+
+A correção é do backend Linux. O executável Windows da mesma versão foi recompilado;
+o backend WASAPI permanece igual e precisa de validação em hardware Windows 11.
+Consulte `VALIDACAO.json` para resultados e limites dos testes. Os testes de áudio usam
+sinais artificiais, sem gravar o microfone pessoal. Não substituem uma chamada real.
 
 ## Novo: vozes de IA locais e por API
 
@@ -6,7 +26,7 @@ Escolha **Usar SEM API** ou **Ativar por API** em Vozes por IA. O modo local ace
 
 App nativo em português para modificar o microfone em tempo real e usá-lo no Discord, OBS e outros programas que permitem escolher uma entrada de áudio.
 
-## Voz grave clara e saída para Discord (1.4.1)
+## Voz grave clara e saída para Discord (1.4.2)
 
 **Grave** e **Grave clara para Discord** aplicam −5 semitons, abaixam também o
 timbre, deixam o corte desligado e usam um realce suave de graves (+1 dB) e
@@ -38,11 +58,11 @@ perfil Grave foi aplicado a pedido do usuário e a Personalizada anterior foi ma
 
 ## Uma versão, dois sistemas
 
-A versão 1.4.1 compartilha interface, efeitos e controles entre CachyOS/Linux e Windows 11 x64. Cada sistema tem seu executável nativo: `gepetas` no Linux e `JOCAS.exe` no Windows. Não é necessário Wine.
+A versão 1.4.2 compartilha interface, efeitos e controles entre CachyOS/Linux e Windows 11 x64. Cada sistema tem seu executável nativo: `gepetas` no Linux e `JOCAS.exe` no Windows. Não é necessário Wine.
 
 No Linux, o app cria **JOCAS Microfone** pelo PipeWire/PulseAudio. No Windows, usa WASAPI e o **VB-CABLE**, instalado separadamente. As instruções de Windows estão em `windows/LEIA-ME-WINDOWS.md`; a compilação está em `windows/BUILD.md`. O pacote Windows inclui as DLLs necessárias.
 
-A edição Windows 1.4.1 foi compilada sem Wine. O funcionamento com dispositivos reais e Discord no Windows 11 ainda não foi validado. As preferências são locais a cada sistema.
+A edição Windows 1.4.2 foi compilada sem Wine. O funcionamento com dispositivos reais e Discord no Windows 11 ainda não foi validado. As preferências são locais a cada sistema.
 
 ## Abrir e usar no Linux
 
@@ -90,7 +110,7 @@ Os controles mudam o som ao vivo. Sua Personalizada é mantida ao escolher outra
 
 Para verificar no Discord: reinicie o JOCAS atualizado, clique em **Grave clara para Discord**, inicie e selecione **JOCAS Microfone**. Comece com Grave e ajuste o tom gradualmente. Se ainda faltar fala, experimente desligar a supressão de ruído/Krisp e ajustar a sensibilidade de entrada nas opções do Discord. Use fones.
 
-## Modo jogos (Linux, 1.4.1)
+## Modo jogos (Linux, 1.4.2)
 
 Para jogos como R.E.P.O., marque **Modo jogos: usar JOCAS como microfone padrão**, inicie o microfone virtual e depois abra o jogo. O nome da entrada é **JOCAS Microfone**. O modo afeta também outros apps que usam a entrada padrão do sistema.
 
@@ -153,6 +173,6 @@ O app processa o som localmente e não grava nem envia áudio para servidores pr
 
 Código do JOCAS sob GPL-2.0-ou-posterior; veja `LICENSE`. Usa Qt, libpulse e Rubber Band instalados no sistema, cada qual com sua licença. Os fontes completos do app acompanham este pacote.
 
-Correção 1.4.1: os botões de modos de IA podem ser usados com a voz ao vivo.
+Correção 1.4.2: os botões de modos de IA podem ser usados com a voz ao vivo.
 Ao trocar o modo, o áudio pausa e a entrada virtual é mantida. Configure e clique
 em Iniciar microfone virtual para continuar.

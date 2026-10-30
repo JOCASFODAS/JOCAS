@@ -474,7 +474,7 @@ public:
 
 int main(int argc, char **argv) {
     QApplication app(argc, argv);
-    app.setApplicationName("Gepetas"); app.setOrganizationName("Gepetas"); app.setApplicationVersion("1.4.1");
+    app.setApplicationName("Gepetas"); app.setOrganizationName("Gepetas"); app.setApplicationVersion("1.4.2");
     app.setApplicationDisplayName("Modificador de Voz JOCAS");
     app.setDesktopFileName("gepetas");
     const bool screenshot = app.arguments().contains("--screenshot");

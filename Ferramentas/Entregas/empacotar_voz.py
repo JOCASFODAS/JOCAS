@@ -57,8 +57,16 @@ Rubber Band 4 e PipeWire/PulseAudio. Em outras distribuições, recompile os fon
 Windows 11 x64: executável nativo e DLLs incluídos, sem Wine. Para transmitir
 voz, instale VB-CABLE separadamente. Driver não incluído.
 
-NOVO: VOZES DE IA
-Correção 1.4.1: os botões de IA funcionam durante o uso do microfone. Trocar
+CORREÇÃO 1.4.2 — JOGOS NO LINUX
+O envio ao microfone virtual e a escuta usam reserva de 200 ms / pré-carga de
+160 ms, prioridade de áudio quando permitida e recuperação de fragmentos sem
+o descarte antigo de fala aos 100 ms. A fila local é limitada a 500 ms.
+Pode acrescentar aproximadamente 100 ms ao atraso anterior de envio.
+A correção é específica de Linux. Windows recompilado da mesma versão, WASAPI
+inalterado. A validação com fala real no The Finals/Discord continua pendente.
+
+VOZES DE IA
+Correção 1.4.1 mantida: os botões de IA funcionam durante o uso do microfone. Trocar
 de modo pausa a voz para configurar; clique em Iniciar para continuar. A entrada
 virtual é mantida durante a pausa.
 Usar SEM API: prepare o motor, baixe Cadu/Jeff + reconhecimento ou importe uma

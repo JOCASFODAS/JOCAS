@@ -1,8 +1,8 @@
-# Modificador de Voz JOCAS 1.4.1 — Windows 11 x64
+# Modificador de Voz JOCAS 1.4.2 — Windows 11 x64
 
-Esta edição usa a mesma interface, os mesmos efeitos e o mesmo código de processamento da edição Linux 1.4.1. O executável de Windows usa WASAPI; o de Linux usa PipeWire/PulseAudio.
+Esta edição usa a mesma interface, os mesmos efeitos e o mesmo código de processamento da edição Linux 1.4.2. O executável de Windows usa WASAPI; o de Linux usa PipeWire/PulseAudio.
 
-## Grave clara (1.4.1)
+## Grave clara (1.4.2)
 
 Use **Grave** ou **Grave clara para Discord**: tom −5, timbre mais baixo,
 sem robô, volume 100%, corte desligado, graves +1 dB e clareza +2 dB.
@@ -49,7 +49,7 @@ Verifique as permissões de microfone para aplicativos da área de trabalho em *
 
 ## Validação e limites desta entrega
 
-O executável Windows x64 da versão 1.4.1 foi compilado e suas dependências conferidas. Os testes do processamento compartilhado passaram no Linux em 44,1, 48 e 96 kHz; os testes de troca e persistência da voz Personalizada também passaram. **Ainda é necessário validar os dispositivos reais, o driver VB-CABLE e uma chamada no Windows 11.** Não foi utilizado Wine para esta atualização. A compilação não possui assinatura digital.
+O executável Windows x64 da versão 1.4.2 foi compilado e suas dependências conferidas. Os testes do processamento compartilhado passaram no Linux em 44,1, 48 e 96 kHz; os testes de troca e persistência da voz Personalizada também passaram. **Ainda é necessário validar os dispositivos reais, o driver VB-CABLE e uma chamada no Windows 11.** Não foi utilizado Wine para esta atualização. A compilação não possui assinatura digital.
 
 O VB-CABLE mantém sua própria licença. O JOCAS é distribuído sob GPL-2.0-ou-posterior; veja `LICENSE`. As bibliotecas de terceiros acompanham suas licenças em `licenses/`. Os fontes completos do JOCAS e do Rubber Band usado na compilação estão no pacote de fontes da mesma versão. As referências das dependências estão em `DEPENDENCIAS.md`.
 
@@ -58,5 +58,11 @@ O VB-CABLE mantém sua própria licença. O JOCAS é distribuído sob GPL-2.0-ou
 
 Os botões **Usar SEM API** e **Ativar por API** usam o mesmo reconhecimento e síntese da edição Linux. Clique **Preparar IA** no primeiro uso; não precisa instalar Python manualmente. No modo local, baixe ou importe modelos Piper e Faster Whisper. No modo API, use sua chave da OpenAI e autorize o envio nesta sessão. Rio não está na lista pública de vozes da API de fala. Veja [o guia completo](ai/LEIA-ME.md). Há atraso por frase. O microfone original não é misturado à síntese.
 
-Na 1.4.1, os botões de modos de IA ficam disponíveis durante o uso: escolher outro
+Na 1.4.2, os botões de modos de IA ficam disponíveis durante o uso: escolher outro
 modo pausa o envio para liberar a configuração. Clique em Iniciar para continuar.
+
+## Atualização 1.4.2
+
+O executável foi recompilado a partir dos fontes 1.4.2. A correção de cortes sob
+carga de jogos desta edição é específica de PipeWire/PulseAudio no Linux. O backend
+WASAPI do Windows permanece igual; não foi validado em hardware Windows 11.

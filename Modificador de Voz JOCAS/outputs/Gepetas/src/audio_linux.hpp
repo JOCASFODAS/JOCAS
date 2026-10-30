@@ -5,6 +5,10 @@
 #include <QThread>
 #include <QString>
 #include <pulse/pulseaudio.h>
+#include <pulse/util.h>
+#include <sys/resource.h>
+#include <sys/syscall.h>
+#include <unistd.h>
 #include <chrono>
 #include <deque>
 #include <functional>
@@ -49,13 +53,13 @@ class AudioWorker : public QThread {
         pa_stream *s = pa_stream_new(context, title, &spec, nullptr);
         check(s != nullptr, "Não foi possível criar o fluxo");
         pa_buffer_attr attr;
-        // The headphone device and USB microphone can deliver different-size batches.
-        // Reserve 120 ms in the monitor stream itself, independent of hardware latency.
-        // Reserve 96 ms / prefill 64 ms for the Discord path too. A 10 ms
-        // prefill lost consonants under ordinary 35 ms scheduling stalls.
+        // Keep a 200 ms server-side reserve on BOTH destinations. Games can
+        // delay this client for >100 ms, even when the audio server stays on time.
+        // Do not use ADJUST_LATENCY on playback: it would include hardware latency
+        // in this target and shrink the actual per-stream safety reserve.
         attr.maxlength = 24000 * sizeof(float);
-        attr.tlength = (monitoring ? 5760 : 4608) * sizeof(float);
-        attr.prebuf = (monitoring ? 4608 : 3072) * sizeof(float);
+        attr.tlength = 9600 * sizeof(float);
+        attr.prebuf = 7680 * sizeof(float);
         attr.minreq = 512 * sizeof(float);
         attr.fragsize = 512 * sizeof(float);
         const auto flags = pa_stream_flags_t(PA_STREAM_DONT_MOVE |
@@ -70,8 +74,10 @@ class AudioWorker : public QThread {
     }
     void queue(std::deque<float> &q, const std::vector<float> &samples) {
         q.insert(q.end(), samples.begin(), samples.end());
-        // Bound latency if a device stalls; never accumulate seconds of old speech.
-        while (q.size() > 4800) q.pop_front();
+        // Accommodate capture catch-up after a scheduling stall. The former
+        // 100 ms limit discarded words in a single delayed capture fragment.
+        // Still bound recovery latency if a device stops consuming audio.
+        while (q.size() > 24000) q.pop_front();
     }
     void write(pa_stream *s, std::deque<float> &q, float gain) {
         if (!s || pa_stream_get_state(s) != PA_STREAM_READY || q.empty()) return;
@@ -103,6 +109,12 @@ protected:
             });
             std::unique_ptr<AiSpeech> ai;
             if (aiSettings.enabled) ai = std::make_unique<AiSpeech>(aiSettings, 48000, onAiStatus);
+            // Boost only this worker, never the UI, games or audio server.
+            // libpulse negotiates the available RT policy without requiring sudo.
+            // If unavailable, request a fair-scheduler boost and keep working
+            // normally even if that request is denied too.
+            if (pa_thread_make_realtime(5) < 0)
+                (void)setpriority(PRIO_PROCESS, id_t(syscall(SYS_gettid)), -10);
             if (onReady) onReady();
             processed.resize(dsp.block); pending.reserve(dsp.block);
             while (!isInterruptionRequested()) {
@@ -124,7 +136,9 @@ protected:
                 }
                 size_t available = pa_stream_readable_size(capture);
                 check(available != size_t(-1), "Falha ao ler microfone");
-                if (available) {
+                // Drain queued fragments instead of sleeping after every peek.
+                // Bound each batch so stop/mute/monitor changes remain responsive.
+                for (int fragment = 0; available && fragment < 32; ++fragment) {
                     const void *data = nullptr; size_t bytes = 0;
                     check(pa_stream_peek(capture, &data, &bytes) >= 0, "Falha ao ler microfone");
                     const float *samples = static_cast<const float *>(data);
@@ -135,10 +149,17 @@ protected:
                             else dsp.process(pending.data(), processed.data(), controls);
                             queue(sendQueue, processed);
                             if (listening) queue(listenQueue, processed);
+                            // Feed playback during catch-up, before the next block
+                            // can fill the client queue. Do not truncate a burst.
+                            write(output, sendQueue, 1.f);
+                            if (listening) write(monitor, listenQueue, controls.listenVolume / 100.f);
                             pending.clear();
                         }
                     }
                     if (bytes) check(pa_stream_drop(capture) >= 0, "Falha ao liberar áudio");
+                    else break;
+                    available = pa_stream_readable_size(capture);
+                    check(available != size_t(-1), "Falha ao ler microfone");
                 }
                 write(output, sendQueue, 1.f);
                 if (listening) write(monitor, listenQueue, controls.listenVolume / 100.f);
@@ -157,6 +178,8 @@ public:
     std::function<void()> onReady;
     std::function<void(QString)> onAiStatus;
     AudioWorker(Controls &c, QString input, QString headphone, QString bus, AiSettings ai = {})
-        : controls(c), inputName(input), outputName(headphone), busName(bus), aiSettings(std::move(ai)) {}
+        : controls(c), inputName(input), outputName(headphone), busName(bus), aiSettings(std::move(ai)) {
+        setObjectName("JOCAS-audio");
+    }
     ~AudioWorker() override { requestInterruption(); wait(); }
 };

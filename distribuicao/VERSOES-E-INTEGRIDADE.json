@@ -30,16 +30,16 @@
     },
     "Modificador de Voz JOCAS": {
       "Atualizacao": {
-        "versao": "1.4.1",
-        "arquivo": "Modificador-de-Voz-JOCAS-1.4.1-Atualizacao.zip"
+        "versao": "1.4.2",
+        "arquivo": "Modificador-de-Voz-JOCAS-1.4.2-Atualizacao.zip"
       },
       "Fontes": {
-        "versao": "1.4.1",
-        "arquivo": "Modificador-de-Voz-JOCAS-1.4.1-Fontes.zip"
+        "versao": "1.4.2",
+        "arquivo": "Modificador-de-Voz-JOCAS-1.4.2-Fontes.zip"
       },
       "Instalacao": {
-        "versao": "1.4.1",
-        "arquivo": "Modificador-de-Voz-JOCAS-1.4.1-Instalacao.zip"
+        "versao": "1.4.2",
+        "arquivo": "Modificador-de-Voz-JOCAS-1.4.2-Instalacao.zip"
       }
     }
   },
@@ -93,28 +93,28 @@
       "sha256": "1ce934c7e424e8493dff445df1addf7838ee2fbe8d88545dc389db8e9d6f4694"
     },
     {
-      "nome": "Modificador-de-Voz-JOCAS-1.4.1-Atualizacao.zip",
+      "nome": "Modificador-de-Voz-JOCAS-1.4.2-Atualizacao.zip",
       "produto": "Modificador de Voz JOCAS",
-      "versao": "1.4.1",
+      "versao": "1.4.2",
       "tipo": "Atualizacao",
-      "bytes": 66599451,
-      "sha256": "2ae48e09ab6c7f0b4640cca74a8e4cd7a8c643aa4297b44c1eb9a8c96e17c454"
+      "bytes": 66604701,
+      "sha256": "7754c0ec80e3ef3f4735ce9c210a441fab43c499f43ac872633d66d822c72851"
     },
     {
-      "nome": "Modificador-de-Voz-JOCAS-1.4.1-Fontes.zip",
+      "nome": "Modificador-de-Voz-JOCAS-1.4.2-Fontes.zip",
       "produto": "Modificador de Voz JOCAS",
-      "versao": "1.4.1",
+      "versao": "1.4.2",
       "tipo": "Fontes",
-      "bytes": 437769,
-      "sha256": "58b34e3b2bff97dd75639ff94ccae4435e1c42fef48b0d5f926b8d7431793831"
+      "bytes": 440605,
+      "sha256": "a559538503bcce00d6299809bf13e8a0cebd5b18e2703e54ba6e3f9b08c89d13"
     },
     {
-      "nome": "Modificador-de-Voz-JOCAS-1.4.1-Instalacao.zip",
+      "nome": "Modificador-de-Voz-JOCAS-1.4.2-Instalacao.zip",
       "produto": "Modificador de Voz JOCAS",
-      "versao": "1.4.1",
+      "versao": "1.4.2",
       "tipo": "Instalacao",
-      "bytes": 66982338,
-      "sha256": "a8b32da0faab420cadb2373654bb24a04d379d9752b33b37ebf7944a5d4f3cd7"
+      "bytes": 66988760,
+      "sha256": "d38ae1d78ad654c3463edf166129c0a298c6723e1218ce35a3fa7f48b1a7a9ed"
     }
   ]
 }

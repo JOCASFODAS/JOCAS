@@ -3,7 +3,7 @@
 Os executáveis e pacotes ficam em Releases. O Git guarda fontes, guias e
 metadados. Tags são independentes por produto:
 
-- `voz-v1.4.1`: Modificador de Voz JOCAS.
+- `voz-v1.4.2`: Modificador de Voz JOCAS.
 - `modlist-v1.0.0`: JOCAS Lista de Mods.
 - `wallpapers-v1.0.0`: JOCAS Wallpapers.
 

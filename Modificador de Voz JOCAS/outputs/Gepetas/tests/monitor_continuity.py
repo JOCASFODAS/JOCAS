@@ -3,6 +3,9 @@
 
 Usage: python3 tests/monitor_continuity.py [test_binary] [--allow-gaps]
 Without a binary, compiles monitor_test.cpp against the current src/.
+Set JOCAS_TEST_STALL_MS=150 to exercise game-sized stalls.
+The synthetic source is recorded separately to reject invalid input fixtures.
+Both silence gaps and waveform discontinuities are checked.
 """
 import json
 import uuid
@@ -17,6 +20,9 @@ import time
 import numpy as np
 
 root = Path(__file__).resolve().parents[1]
+# Exercise game-sized scheduler stalls without touching other processes.
+stall_ms = int(os.environ.get('JOCAS_TEST_STALL_MS', '35'))
+assert 1 <= stall_ms <= 250
 modules, processes, files = [], [], []
 prefix = 'gvcontinuity_' + uuid.uuid4().hex[:10]
 
@@ -40,8 +46,11 @@ with tempfile.TemporaryDirectory(prefix='gepetas-continuity-') as td:
         tone.tofile(tmp/'tone.raw')
         tonefile = open(tmp/'tone.raw', 'rb'); files.append(tonefile)
         player = sp.Popen(['pacat', '--client-name=JOCAS-continuity-tone', '--volume=65536', '--property=node.dont-reconnect=true', '--playback', f'--device={prefix}_input', '--raw', '--format=float32le',
-                           '--rate=48000', '--channels=1', '--latency-msec=100'], stdin=tonefile)
+                           '--rate=48000', '--channels=1', '--latency-msec=500'], stdin=tonefile)
         processes.append(player)
+        reference = open(tmp/'input.raw', 'wb'); files.append(reference)
+        reference_recorder = sp.Popen(['parec', '--client-name=JOCAS-reference-recorder', '--property=node.dont-reconnect=true', '--property=node.dont-fallback=true', f'--device={prefix}_input.monitor', '--raw', '--format=float32le', '--rate=48000', '--channels=1', '--latency-msec=100'], stdout=reference)
+        processes.append(reference_recorder)
         recording = open(tmp/'monitor.raw', 'wb'); files.append(recording)
         recorder = sp.Popen(['parec', '--client-name=JOCAS-continuity-recorder', '--property=node.dont-reconnect=true', '--property=node.dont-fallback=true', f'--device={prefix}_' + ('bus.monitor' if '--send' in sys.argv else 'listen.monitor'), '--raw', '--format=float32le',
                              '--rate=48000', '--channels=1', '--latency-msec=20'], stdout=recording)
@@ -55,25 +64,36 @@ with tempfile.TemporaryDirectory(prefix='gepetas-continuity-') as td:
         while time.monotonic() - begin < 12:
             if engine.poll() is not None: raise RuntimeError('Engine stopped unexpectedly')
             os.kill(engine.pid, signal.SIGSTOP)
-            time.sleep(.035)
+            time.sleep(stall_ms / 1000)
             os.kill(engine.pid, signal.SIGCONT)
-            time.sleep(.165)
+            time.sleep(.45 if stall_ms > 35 else .165)
         code = engine.wait(timeout=8)
         recorder.terminate(); recorder.wait(timeout=3); recording.flush()
+        reference_recorder.terminate(); reference_recorder.wait(timeout=3); reference.flush()
         log.seek(0); logtext = log.read()
         assert code == 0 and 'READY' in logtext, logtext
         data = np.fromfile(tmp/'monitor.raw', dtype='<f4')[3*48000:11*48000]
         assert len(data) == 8*48000, 'Incomplete recording'
         assert np.sqrt(np.mean(data**2)) > .02, 'Monitor silent'
+        refdata = np.fromfile(tmp/'input.raw', dtype='<f4')[3*48000:11*48000]
+        assert len(refdata) == 8*48000, 'Incomplete reference recording'
+        refedges = np.diff(np.r_[False, np.abs(refdata) < .00001, False].astype(np.int8))
+        reflengths = np.flatnonzero(refedges == -1) - np.flatnonzero(refedges == 1)
+        reference_gaps = int(np.sum(reflengths >= 96))
+        assert reference_gaps == 0, 'Synthetic input itself had gaps; fixture invalid under system load'
         quiet = np.abs(data) < .00001
         edges = np.diff(np.r_[False, quiet, False].astype(np.int8))
         lengths = np.flatnonzero(edges == -1) - np.flatnonzero(edges == 1)
         dropouts = lengths[lengths >= 96]  # Ignore sine zero crossings; count gaps >= 2 ms.
         metrics = {'dropouts_over_2ms':len(dropouts), 'longest_gap_ms':float(max(lengths, default=0)/48),
                    'silent_gap_total_ms':float(sum(dropouts)/48), 'measured_seconds':8,
-                   'injected_stall_ms':35, 'path':'send' if '--send' in sys.argv else 'monitor'}
+                   'waveform_jumps_over_0_08':int(np.sum(np.abs(np.diff(data)) > .08)),
+                   'injected_stall_ms':stall_ms, 'reference_dropouts':reference_gaps,
+                   'worker_scheduling':next((line for line in logtext.splitlines() if line.startswith('READY')), 'unknown'), 'path':'send' if '--send' in sys.argv else 'monitor'}
         print(json.dumps(metrics, indent=2), flush=True)
-        if '--allow-gaps' not in sys.argv: assert not len(dropouts), 'Monitor underruns under scheduling jitter'
+        if '--allow-gaps' not in sys.argv:
+            assert not len(dropouts), 'Audio underruns under scheduling jitter'
+            assert metrics['waveform_jumps_over_0_08'] == 0, 'Audio waveform truncated during catch-up'
     finally:
         for p in processes:
             if p.poll() is None:

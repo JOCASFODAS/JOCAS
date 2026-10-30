@@ -1,4 +1,13 @@
-# JOCAS 1.2.1 em jogos
+# JOCAS 1.4.2 em jogos
+
+## Proteção contra cortes no Linux
+
+A versão 1.4.2 protege envio e escuta com reserva de 200 ms, prioridade de áudio
+quando permitida e recuperação de fragmentos acumulados sem o descarte antigo de
+100 ms. A mudança pode acrescentar cerca de 100 ms ao atraso anterior de envio.
+Não altera o jogo nem limita seus FPS. Desconexões USB ou bloqueios maiores que a
+reserva ainda podem causar interrupções. Um teste de chamada no The Finals/Discord
+com fala real continua necessário; veja `VALIDACAO.json`.
 
 ## CachyOS / Linux
 

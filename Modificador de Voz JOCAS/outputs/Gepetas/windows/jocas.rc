@@ -2,8 +2,8 @@
 1 ICON "jocas.ico"
 1 RT_MANIFEST "jocas.manifest"
 1 VERSIONINFO
-FILEVERSION 1,4,1,0
-PRODUCTVERSION 1,4,1,0
+FILEVERSION 1,4,2,0
+PRODUCTVERSION 1,4,2,0
 FILEOS VOS_NT_WINDOWS32
 FILETYPE VFT_APP
 BEGIN
@@ -13,8 +13,8 @@ BEGIN
     BEGIN
       VALUE "FileDescription", "Modificador de Voz JOCAS\0"
       VALUE "ProductName", "Modificador de Voz JOCAS\0"
-      VALUE "FileVersion", "1.4.1\0"
-      VALUE "ProductVersion", "1.4.1\0"
+      VALUE "FileVersion", "1.4.2\0"
+      VALUE "ProductVersion", "1.4.2\0"
       VALUE "OriginalFilename", "JOCAS.exe\0"
     END
   END

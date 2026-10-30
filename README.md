@@ -11,7 +11,7 @@ vez ou **Atualização** se já utiliza o produto. Extraia todo o ZIP e leia o g
 
 | Produto | Versão | Downloads | Compatibilidade real |
 | --- | --- | --- | --- |
-| **Modificador de Voz JOCAS** | 1.4.1 | [Instalação](https://github.com/JOCASFODAS/JOCAS/releases/download/voz-v1.4.1/Modificador-de-Voz-JOCAS-1.4.1-Instalacao.zip) · [Atualização](https://github.com/JOCASFODAS/JOCAS/releases/download/voz-v1.4.1/Modificador-de-Voz-JOCAS-1.4.1-Atualizacao.zip) · [Detalhes](https://github.com/JOCASFODAS/JOCAS/releases/tag/voz-v1.4.1) | Linux x64; Windows 11 x64 compilado, ainda sem teste de hardware. |
+| **Modificador de Voz JOCAS** | 1.4.2 | [Instalação](https://github.com/JOCASFODAS/JOCAS/releases/download/voz-v1.4.2/Modificador-de-Voz-JOCAS-1.4.2-Instalacao.zip) · [Atualização](https://github.com/JOCASFODAS/JOCAS/releases/download/voz-v1.4.2/Modificador-de-Voz-JOCAS-1.4.2-Atualizacao.zip) · [Detalhes](https://github.com/JOCASFODAS/JOCAS/releases/tag/voz-v1.4.2) | Linux x64; Windows 11 x64 compilado, ainda sem teste de hardware. |
 | **JOCAS Lista de Mods** | 1.0.0 | [Instalação](https://github.com/JOCASFODAS/JOCAS/releases/download/modlist-v1.0.0/JOCAS-Lista-de-Mods-1.0.0-Instalacao.zip) · [Atualização](https://github.com/JOCASFODAS/JOCAS/releases/download/modlist-v1.0.0/JOCAS-Lista-de-Mods-1.0.0-Atualizacao.zip) · [Detalhes](https://github.com/JOCASFODAS/JOCAS/releases/tag/modlist-v1.0.0) | Minecraft Java, com variantes Fabric, Forge e NeoForge. Veja as versões testadas no guia. |
 | **JOCAS Wallpapers** | 1.0.0 | [Instalação](https://github.com/JOCASFODAS/JOCAS/releases/download/wallpapers-v1.0.0/JOCAS-Wallpapers-1.0.0-CachyOS-KDE-Wayland-x64-Instalacao.zip) · [Atualização](https://github.com/JOCASFODAS/JOCAS/releases/download/wallpapers-v1.0.0/JOCAS-Wallpapers-1.0.0-CachyOS-KDE-Wayland-x64-Atualizacao.zip) · [Detalhes](https://github.com/JOCASFODAS/JOCAS/releases/tag/wallpapers-v1.0.0) | CachyOS x64, KDE Plasma e Wayland. Não é uma versão universal para todas as distros/desktops. |
 
@@ -19,6 +19,15 @@ Os pacotes de atualização contêm arquivos completos de substituição; não s
 patches incrementais. Faça backup da instalação e das configurações antes de
 substituir arquivos. Os ZIPs de fontes também ficam na release de cada produto.
 [Confira os hashes SHA-256](distribuicao/SHA256SUMS.txt).
+
+## Correção no modificador 1.4.2
+
+Corrige cortes de voz sob carga de jogos no Linux: prioridade na tarefa de áudio,
+reserva de 200 ms para envio e escuta e recuperação da fala acumulada. Testes
+controlados com pausas de 150 ms passaram sem cortes; o usuário também confirmou
+voz normal com The Finals aberto. A reserva pode acrescentar cerca de 100 ms ao
+atraso anterior. Windows recompilado da mesma versão; WASAPI e validação em
+hardware Windows permanecem sem alteração.
 
 ## O que cada projeto faz
 

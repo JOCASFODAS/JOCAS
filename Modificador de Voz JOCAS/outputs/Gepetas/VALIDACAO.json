@@ -1,6 +1,6 @@
 {
-  "version": "1.4.1",
-  "date": "2026-10-23",
+  "version": "1.4.2",
+  "date": "2026-10-30",
   "native_linux_build": "passed: same shared UI and audio sources; Qt/Pulse/Rubber Band",
   "windows_native_build": "passed: MinGW x64, same UI/audio/DSP/AI bridge; native WASAPI, no Wine",
   "tests_passed": [
@@ -15,7 +15,8 @@
     "AI panel: session-only key, consent reset, settings persistence and validation",
     "Prepare IA button: isolated Python 3.12 + hash-locked dependencies successfully installed",
     "Windows Python dependency wheels available and resolver dry run with hash constraints passed; not executed on Windows",
-    "1.4.1 live mode switch regression + AI panel click/validation/preferences tests + existing Linux audio integration rerun"
+    "1.4.1 live mode switch regression + AI panel click/validation/preferences tests + existing Linux audio integration rerun",
+    "1.4.2: controlled 150 ms scheduling-stall regression, synthetic input continuity reference, no output gaps or waveform truncation on send/monitor; effects integration and live AI mode switching rerun; modified-only DSP, profiles, clarity, PCM, Discord route and AI bridge rerun"
   ],
   "ai_local_pipeline": {
     "local_repeat_seconds": 2.319,
@@ -37,17 +38,17 @@
     "passed": true,
     "metrics": {
       "off_before": {
-        "virtual_rms": 0.15378321707248688,
+        "virtual_rms": 0.15379713475704193,
         "listen_rms": 0.0,
         "frequency_hz": 165.0
       },
       "on": {
-        "virtual_rms": 0.15301154553890228,
-        "listen_rms": 0.07650604099035263,
+        "virtual_rms": 0.1537637859582901,
+        "listen_rms": 0.07686296105384827,
         "frequency_hz": 165.0
       },
       "off_after": {
-        "virtual_rms": 0.1536695808172226,
+        "virtual_rms": 0.15371432900428772,
         "listen_rms": 0.0,
         "frequency_hz": 165.0
       },
@@ -77,12 +78,58 @@
     "cause": "Mode buttons were disabled when audio was running.",
     "behavior": "Mode buttons remain enabled while running; selecting a different mode requests a muted worker stop, releases the settings, and retains the virtual microphone until resume or close. Clicking the same mode does not stop audio.",
     "regression_test": {
-      "live": 0.15369635820388794,
+      "live": 0.15071658790111542,
       "paused": 0.0,
-      "resumed": 0.15367871522903442,
+      "resumed": 0.15368054807186127,
       "passed": true
     },
     "additional_assertions": "Same virtual source index during pause and resume, failed API validation keeps that input connected, settings unlock, close cleans up, hardware defaults unchanged. Synthetic fixtures only."
   },
-  "prior_ai_tests": "Speech helper is byte-for-byte identical to 1.4.0. Local speech pipeline and mocked API results below are retained from 1.4.0; not rerun for this UI/lifecycle fix."
+  "prior_ai_tests": "Real local STT/TTS and mocked API pipeline results are retained from 1.4.0. This Linux buffering fix reruns the native AI bridge and mode switching, not heavyweight model inference or live API.",
+  "game_audio_fix": {
+    "scope": "Linux PipeWire/PulseAudio only; Windows WASAPI unchanged and native binary rebuilt",
+    "cause": "Ordinary-priority audio worker competing with games; playback safety reserve too short for long scheduling stalls; capture catch-up truncated by old 100 ms local queue limit.",
+    "changes": [
+      "Request real-time audio worker priority 5 via libpulse, with per-thread nice -10 fallback if available. No privileged helper or game/server priority changes.",
+      "Both playback streams target 200 ms and prebuffer 160 ms, independent of hardware latency.",
+      "Drain up to 32 capture fragments per iteration and write each processed DSP block during catch-up.",
+      "Local queues bounded to 500 ms rather than discarding burst audio after 100 ms."
+    ],
+    "baseline_1_4_1_controlled": {
+      "dropouts_over_2ms": 17,
+      "longest_gap_ms": 85.33333333333333,
+      "silent_gap_total_ms": 949.3333333333334,
+      "measured_seconds": 8,
+      "waveform_jumps_over_0_08": 42,
+      "injected_stall_ms": 150,
+      "reference_dropouts": 0,
+      "worker_scheduling": "READY scheduler=0 priority=0",
+      "path": "send"
+    },
+    "updated_send": {
+      "dropouts_over_2ms": 0,
+      "longest_gap_ms": 0.020833333333333332,
+      "silent_gap_total_ms": 0.0,
+      "measured_seconds": 8,
+      "waveform_jumps_over_0_08": 0,
+      "injected_stall_ms": 150,
+      "reference_dropouts": 0,
+      "worker_scheduling": "READY scheduler=1073741826 priority=5",
+      "path": "send"
+    },
+    "updated_monitor": {
+      "dropouts_over_2ms": 0,
+      "longest_gap_ms": 0.020833333333333332,
+      "silent_gap_total_ms": 0.0,
+      "measured_seconds": 8,
+      "waveform_jumps_over_0_08": 0,
+      "injected_stall_ms": 150,
+      "reference_dropouts": 0,
+      "path": "monitor"
+    },
+    "environment": "CachyOS; THE FINALS process running during synthetic tests. Tests use isolated virtual input/output and synthetic tone; personal microphone not recorded.",
+    "tradeoff": "Around 100 ms added to previous send safety reserve. End-to-end latency depends on devices, DSP, server and receiving application. Stalls beyond the reserve or physical microphone disconnects can still interrupt audio.",
+    "confirmed_runtime_scheduling": "READY scheduler=1073741826 priority=5",
+    "real_game_or_discord_call": "Not verified; needs user confirmation with actual speech."
+  }
 }

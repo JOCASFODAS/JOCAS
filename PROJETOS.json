@@ -3,9 +3,9 @@
   "produtos": [
     {
       "nome": "Modificador de Voz JOCAS",
-      "versao": "1.4.1",
+      "versao": "1.4.2",
       "pasta": "Modificador de Voz JOCAS/outputs/Gepetas",
-      "tag": "voz-v1.4.1",
+      "tag": "voz-v1.4.2",
       "sistemas": [
         "Linux x64",
         "Windows 11 x64 (compilado; hardware não validado)"
