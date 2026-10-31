@@ -1,4 +1,19 @@
-# Modificador de Voz JOCAS 1.4.2 — Linux e Windows
+# Modificador de Voz JOCAS 1.4.3 — Linux e Windows
+
+## Proteção do sistema de áudio durante jogos — 1.4.3
+
+Os fluxos do JOCAS no PipeWire mantêm blocos de 1024 amostras (21,3 ms a 48 kHz)
+enquanto estiverem ativos. Isso protege o processamento no servidor quando um jogo
+pede blocos de 256 amostras (5,3 ms). A reserva de áudio e a prioridade da versão
+1.4.2 continuam presentes: elas protegem outra parte do caminho.
+
+A restrição acompanha os fluxos do aplicativo e termina quando eles são liberados.
+Não grava um tamanho fixo global nas configurações do computador. Pode acrescentar
+até cerca de 16 ms ao ciclo de áudio de um jogo que antes usava 256 amostras; o
+atraso real inclui também os efeitos, a reserva e o aplicativo de chamada. O tamanho
+do bloco pode afetar outros clientes que compartilham o mesmo grafo de áudio.
+Em PulseAudio sem PipeWire, a propriedade é ignorada; não há essa proteção de grafo.
+A correção é específica de Linux; o backend Windows permanece igual.
 
 ## Correção de cortes ao abrir jogos — 1.4.2
 
@@ -58,11 +73,11 @@ perfil Grave foi aplicado a pedido do usuário e a Personalizada anterior foi ma
 
 ## Uma versão, dois sistemas
 
-A versão 1.4.2 compartilha interface, efeitos e controles entre CachyOS/Linux e Windows 11 x64. Cada sistema tem seu executável nativo: `gepetas` no Linux e `JOCAS.exe` no Windows. Não é necessário Wine.
+A versão 1.4.3 compartilha interface, efeitos e controles entre CachyOS/Linux e Windows 11 x64. Cada sistema tem seu executável nativo: `gepetas` no Linux e `JOCAS.exe` no Windows. Não é necessário Wine.
 
 No Linux, o app cria **JOCAS Microfone** pelo PipeWire/PulseAudio. No Windows, usa WASAPI e o **VB-CABLE**, instalado separadamente. As instruções de Windows estão em `windows/LEIA-ME-WINDOWS.md`; a compilação está em `windows/BUILD.md`. O pacote Windows inclui as DLLs necessárias.
 
-A edição Windows 1.4.2 foi compilada sem Wine. O funcionamento com dispositivos reais e Discord no Windows 11 ainda não foi validado. As preferências são locais a cada sistema.
+A edição Windows 1.4.3 foi compilada sem Wine. O funcionamento com dispositivos reais e Discord no Windows 11 ainda não foi validado. As preferências são locais a cada sistema.
 
 ## Abrir e usar no Linux
 

@@ -57,13 +57,21 @@ Rubber Band 4 e PipeWire/PulseAudio. Em outras distribuições, recompile os fon
 Windows 11 x64: executável nativo e DLLs incluídos, sem Wine. Para transmitir
 voz, instale VB-CABLE separadamente. Driver não incluído.
 
-CORREÇÃO 1.4.2 — JOGOS NO LINUX
+PROTEÇÃO 1.4.3 — BLOCOS DE ÁUDIO NO PIPEWIRE
+Enquanto os fluxos do JOCAS estiverem ativos, eles mantêm blocos de 1024 amostras
+(21,3 ms a 48 kHz). Isso protege o grafo de áudio quando jogos pedem 256 amostras
+(5,3 ms). A restrição acompanha os fluxos e termina ao parar o JOCAS; não há um
+ajuste global permanente. Pode acrescentar cerca de 16 ms ao ciclo de clientes no
+mesmo grafo. PulseAudio sem PipeWire ignora esta propriedade. Windows recompilado;
+WASAPI não mudou e hardware Windows 11 continua sem validação.
+
+CORREÇÃO 1.4.2 MANTIDA — JOGOS NO LINUX
 O envio ao microfone virtual e a escuta usam reserva de 200 ms / pré-carga de
 160 ms, prioridade de áudio quando permitida e recuperação de fragmentos sem
 o descarte antigo de fala aos 100 ms. A fila local é limitada a 500 ms.
 Pode acrescentar aproximadamente 100 ms ao atraso anterior de envio.
 A correção é específica de Linux. Windows recompilado da mesma versão, WASAPI
-inalterado. A validação com fala real no The Finals/Discord continua pendente.
+inalterado. O usuário confirmou voz normal com The Finals aberto após esta proteção 1.4.3.
 
 VOZES DE IA
 Correção 1.4.1 mantida: os botões de IA funcionam durante o uso do microfone. Trocar

@@ -1,6 +1,6 @@
 {
-  "version": "1.4.2",
-  "date": "2026-10-30",
+  "version": "1.4.3",
+  "date": "2026-10-31",
   "native_linux_build": "passed: same shared UI and audio sources; Qt/Pulse/Rubber Band",
   "windows_native_build": "passed: MinGW x64, same UI/audio/DSP/AI bridge; native WASAPI, no Wine",
   "tests_passed": [
@@ -16,7 +16,8 @@
     "Prepare IA button: isolated Python 3.12 + hash-locked dependencies successfully installed",
     "Windows Python dependency wheels available and resolver dry run with hash constraints passed; not executed on Windows",
     "1.4.1 live mode switch regression + AI panel click/validation/preferences tests + existing Linux audio integration rerun",
-    "1.4.2: controlled 150 ms scheduling-stall regression, synthetic input continuity reference, no output gaps or waveform truncation on send/monitor; effects integration and live AI mode switching rerun; modified-only DSP, profiles, clarity, PCM, Discord route and AI bridge rerun"
+    "1.4.2: controlled 150 ms scheduling-stall regression, synthetic input continuity reference, no output gaps or waveform truncation on send/monitor; effects integration and live AI mode switching rerun; modified-only DSP, profiles, clarity, PCM, Discord route and AI bridge rerun",
+    "1.4.3: full virtual microphone with changing concurrent consumers, scoped guard/lifecycle assertions and 30 seconds without gaps/jumps; 150 ms stall regression; GUI pitch, no original tone mixing, mute and monitor tests. User confirmed normal voice with The Finals open."
   ],
   "ai_local_pipeline": {
     "local_repeat_seconds": 2.319,
@@ -38,17 +39,17 @@
     "passed": true,
     "metrics": {
       "off_before": {
-        "virtual_rms": 0.15379713475704193,
+        "virtual_rms": 0.15368393063545227,
         "listen_rms": 0.0,
         "frequency_hz": 165.0
       },
       "on": {
-        "virtual_rms": 0.1537637859582901,
-        "listen_rms": 0.07686296105384827,
+        "virtual_rms": 0.15366573631763458,
+        "listen_rms": 0.0768439769744873,
         "frequency_hz": 165.0
       },
       "off_after": {
-        "virtual_rms": 0.15371432900428772,
+        "virtual_rms": 0.1536848098039627,
         "listen_rms": 0.0,
         "frequency_hz": 165.0
       },
@@ -68,12 +69,11 @@
   "ai_privacy": "Local inference loads only local model paths. No app recordings or transcript logs. Explicit download button is separate. API transmission needs key and per-session consent. No original mic fallback when synthesis fails.",
   "ai_limits": "Phrase detection ends after 650ms quiet or 12s limit. 2 queued input phrases plus active request; max 30s generated output queued. AI text can contain recognition errors. Effects/EQ are not applied in AI mode; master volume, monitor and mute remain. No voice training or WAV/RVC import.",
   "unverified": [
-    "real Discord/game call",
-    "human intelligibility in a real call",
     "live OpenAI API",
-    "Windows 11 hardware, Piper/Faster Whisper execution and VB-CABLE"
+    "Windows 11 hardware, Piper/Faster Whisper execution and VB-CABLE",
+    "Other games, audio hardware and multi-hour stress sessions with graph protection"
   ],
-  "installed_user_settings": "Existing QSettings IDs and presets retained; no key saved, no capture started automatically. Runtime/models kept under user config, separate from app updates.",
+  "installed_user_settings": "Existing QSettings IDs, presets, models and runtime preserved. Normal launch leaves capture and listening off; explicit --start-audio and optional --listen can resume a session (used only for this already active update session). No key saved.",
   "ai_mode_switch_fix": {
     "cause": "Mode buttons were disabled when audio was running.",
     "behavior": "Mode buttons remain enabled while running; selecting a different mode requests a muted worker stop, releases the settings, and retains the virtual microphone until resume or close. Clicking the same mode does not stop audio.",
@@ -130,6 +130,52 @@
     "environment": "CachyOS; THE FINALS process running during synthetic tests. Tests use isolated virtual input/output and synthetic tone; personal microphone not recorded.",
     "tradeoff": "Around 100 ms added to previous send safety reserve. End-to-end latency depends on devices, DSP, server and receiving application. Stalls beyond the reserve or physical microphone disconnects can still interrupt audio.",
     "confirmed_runtime_scheduling": "READY scheduler=1073741826 priority=5",
-    "real_game_or_discord_call": "Not verified; needs user confirmation with actual speech."
-  }
+    "real_game_or_discord_call": "User reported normal voice after 1.4.2, then recurrence. See game_graph_fix for 1.4.3 confirmation.",
+    "version": "1.4.2 (historical; scoped graph protection added in 1.4.3)"
+  },
+  "game_graph_fix": {
+    "scope": "Linux PipeWire only. Standard PulseAudio ignores node.force-quantum. Windows WASAPI unchanged.",
+    "observed": "User and friends heard renewed cuts with The Finals. Native 1.4.2 was running with RR priority 5 and correct physical-to-virtual routing. Game requested 256/48000 graph latency.",
+    "change": "Set node.force-quantum=1024 on each active JOCAS capture/playback/monitor stream using pa_stream_new_with_proplist. The constraint is released with the streams; no permanent global metadata/config override.",
+    "tradeoff": "Graph cycles are 21.3 ms at 48 kHz instead of 5.3 ms for a 256-frame cycle. Other clients in the same graph can be affected. Existing 200 ms playback reserve remains.",
+    "full_graph_continuity": {
+      "reference": {
+        "dropouts_over_2ms": 0,
+        "longest_gap_ms": 0.020833333333333332,
+        "waveform_jumps_over_0_08": 0
+      },
+      "sent": {
+        "dropouts_over_2ms": 0,
+        "longest_gap_ms": 0.020833333333333332,
+        "waveform_jumps_over_0_08": 0
+      },
+      "heard": {
+        "dropouts_over_2ms": 0,
+        "longest_gap_ms": 0.020833333333333332,
+        "waveform_jumps_over_0_08": 0
+      },
+      "global_force_quantum": 0,
+      "scoped_quantum": 1024,
+      "measured_seconds": 30
+    },
+    "150ms_stall_regression": {
+      "dropouts_over_2ms": 0,
+      "longest_gap_ms": 0.020833333333333332,
+      "silent_gap_total_ms": 0.0,
+      "measured_seconds": 8,
+      "waveform_jumps_over_0_08": 0,
+      "injected_stall_ms": 150,
+      "reference_dropouts": 0,
+      "worker_scheduling": "READY scheduler=1073741826 priority=5",
+      "path": "send"
+    },
+    "lifecycle": "Synthetic full bus/remap source recorded only at exported mic; changing second consumer requested 5/10/40 ms while game-like 5 ms consumer remained. Asserted stream properties, no global override, unchanged defaults, and own nodes removed after stop.",
+    "user_confirmation": {
+      "date": "2026-10-31",
+      "result": "Cortes pararam; voz ficou normal com o jogo aberto.",
+      "recording": "No personal microphone recording taken."
+    },
+    "installed_session": "Updated existing binary with backup. Active capture streams temporarily kept on a silent handoff during restart; returned to JOCAS microphone. Listening resumed. Temporary global diagnostic override restored to 0; actual running streams have scoped 1024 property."
+  },
+  "previous_test_results": "Heavyweight local speech/model/API mocks and unchanged DSP tests are retained from their documented prior versions, not all rerun in 1.4.3. New graph and Linux GUI tests above were rerun."
 }

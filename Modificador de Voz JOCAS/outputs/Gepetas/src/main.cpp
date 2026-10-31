@@ -244,6 +244,13 @@ class Window : public QWidget {
         }
     }
 public:
+    // Explicit command-line opt-in lets the updater resume an already active
+    // session. Normal launches still leave recording and listening disabled.
+    void startAudio(bool monitoring = false) {
+        if (preview || worker) return;
+        listen->setChecked(monitoring);
+        toggle();
+    }
     explicit Window(bool screenshot = false) : preview(screenshot) {
         setWindowTitle("Modificador de Voz JOCAS");
 #ifdef Q_OS_WIN
@@ -474,7 +481,7 @@ public:
 
 int main(int argc, char **argv) {
     QApplication app(argc, argv);
-    app.setApplicationName("Gepetas"); app.setOrganizationName("Gepetas"); app.setApplicationVersion("1.4.2");
+    app.setApplicationName("Gepetas"); app.setOrganizationName("Gepetas"); app.setApplicationVersion("1.4.3");
     app.setApplicationDisplayName("Modificador de Voz JOCAS");
     app.setDesktopFileName("gepetas");
     const bool screenshot = app.arguments().contains("--screenshot");
@@ -486,6 +493,10 @@ int main(int argc, char **argv) {
     }
     std::signal(SIGINT, handleSignal); std::signal(SIGTERM, handleSignal);
     Window window(screenshot); window.show();
+    if (!screenshot && app.arguments().contains("--start-audio"))
+        QTimer::singleShot(500, &window, [&] {
+            window.startAudio(app.arguments().contains("--listen"));
+        });
     if (screenshot) {
         const int i = app.arguments().indexOf("--screenshot");
         const QString path = app.arguments().value(i + 1, "gepetas-preview.png");

@@ -1,4 +1,4 @@
-# Modificador de Voz JOCAS 1.4.2 — Windows 11 x64
+# Modificador de Voz JOCAS 1.4.3 — Windows 11 x64
 
 Esta edição usa a mesma interface, os mesmos efeitos e o mesmo código de processamento da edição Linux 1.4.2. O executável de Windows usa WASAPI; o de Linux usa PipeWire/PulseAudio.
 
@@ -66,3 +66,9 @@ modo pausa o envio para liberar a configuração. Clique em Iniciar para continu
 O executável foi recompilado a partir dos fontes 1.4.2. A correção de cortes sob
 carga de jogos desta edição é específica de PipeWire/PulseAudio no Linux. O backend
 WASAPI do Windows permanece igual; não foi validado em hardware Windows 11.
+
+## Atualização 1.4.3
+
+Executável recompilado da mesma versão. A proteção do tamanho dos blocos é
+específica do PipeWire no Linux; WASAPI não mudou. Hardware Windows 11 segue
+sem validação nesta atualização.

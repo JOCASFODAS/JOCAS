@@ -50,7 +50,17 @@ class AudioWorker : public QThread {
     }
     pa_stream *stream(const char *title, const QString &device, bool recording, bool monitoring = false) {
         pa_sample_spec spec{PA_SAMPLE_FLOAT32NE, 48000, 1};
-        pa_stream *s = pa_stream_new(context, title, &spec, nullptr);
+        pa_proplist *properties = pa_proplist_new();
+        check(properties != nullptr, "Falha ao configurar o fluxo de áudio");
+        // Games can request a 256-frame quantum (5.3 ms at 48 kHz).
+        // Client buffering and worker RT priority do not protect the server
+        // graph from that deadline. Keep our active graphs at 1024 frames
+        // (21.3 ms). This is a node-scoped PipeWire property, NOT global
+        // clock.force-quantum metadata: releasing our streams releases the
+        // constraint. PulseAudio servers that do not implement it ignore it.
+        pa_proplist_sets(properties, "node.force-quantum", "1024");
+        pa_stream *s = pa_stream_new_with_proplist(context, title, &spec, nullptr, properties);
+        pa_proplist_free(properties);
         check(s != nullptr, "Não foi possível criar o fluxo");
         pa_buffer_attr attr;
         // Keep a 200 ms server-side reserve on BOTH destinations. Games can

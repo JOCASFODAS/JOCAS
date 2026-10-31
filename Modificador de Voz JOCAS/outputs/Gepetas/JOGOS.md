@@ -1,4 +1,13 @@
-# JOCAS 1.4.2 em jogos
+# JOCAS 1.4.3 em jogos
+
+## Blocos protegidos durante o uso — 1.4.3
+
+No PipeWire, os fluxos ativos do JOCAS pedem um tamanho fixo de 1024 amostras,
+com cerca de 21,3 ms por ciclo a 48 kHz. Isso impede que o pedido de 256 amostras
+feito por jogos reduza demais o prazo de processamento do grafo. Ao parar o
+modificador, a restrição é liberada automaticamente. Não há ajuste global permanente.
+A mudança afeta clientes no mesmo grafo e pode acrescentar cerca de 16 ms ao ciclo
+de quem usava 256 amostras. Em PulseAudio sem PipeWire, esta proteção é ignorada.
 
 ## Proteção contra cortes no Linux
 

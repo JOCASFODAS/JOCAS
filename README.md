@@ -11,7 +11,7 @@ vez ou **Atualização** se já utiliza o produto. Extraia todo o ZIP e leia o g
 
 | Produto | Versão | Downloads | Compatibilidade real |
 | --- | --- | --- | --- |
-| **Modificador de Voz JOCAS** | 1.4.2 | [Instalação](https://github.com/JOCASFODAS/JOCAS/releases/download/voz-v1.4.2/Modificador-de-Voz-JOCAS-1.4.2-Instalacao.zip) · [Atualização](https://github.com/JOCASFODAS/JOCAS/releases/download/voz-v1.4.2/Modificador-de-Voz-JOCAS-1.4.2-Atualizacao.zip) · [Detalhes](https://github.com/JOCASFODAS/JOCAS/releases/tag/voz-v1.4.2) | Linux x64; Windows 11 x64 compilado, ainda sem teste de hardware. |
+| **Modificador de Voz JOCAS** | 1.4.3 | [Instalação](https://github.com/JOCASFODAS/JOCAS/releases/download/voz-v1.4.3/Modificador-de-Voz-JOCAS-1.4.3-Instalacao.zip) · [Atualização](https://github.com/JOCASFODAS/JOCAS/releases/download/voz-v1.4.3/Modificador-de-Voz-JOCAS-1.4.3-Atualizacao.zip) · [Detalhes](https://github.com/JOCASFODAS/JOCAS/releases/tag/voz-v1.4.3) | Linux x64; Windows 11 x64 compilado, ainda sem teste de hardware. |
 | **JOCAS Lista de Mods** | 1.0.0 | [Instalação](https://github.com/JOCASFODAS/JOCAS/releases/download/modlist-v1.0.0/JOCAS-Lista-de-Mods-1.0.0-Instalacao.zip) · [Atualização](https://github.com/JOCASFODAS/JOCAS/releases/download/modlist-v1.0.0/JOCAS-Lista-de-Mods-1.0.0-Atualizacao.zip) · [Detalhes](https://github.com/JOCASFODAS/JOCAS/releases/tag/modlist-v1.0.0) | Minecraft Java, com variantes Fabric, Forge e NeoForge. Veja as versões testadas no guia. |
 | **JOCAS Wallpapers** | 1.0.0 | [Instalação](https://github.com/JOCASFODAS/JOCAS/releases/download/wallpapers-v1.0.0/JOCAS-Wallpapers-1.0.0-CachyOS-KDE-Wayland-x64-Instalacao.zip) · [Atualização](https://github.com/JOCASFODAS/JOCAS/releases/download/wallpapers-v1.0.0/JOCAS-Wallpapers-1.0.0-CachyOS-KDE-Wayland-x64-Atualizacao.zip) · [Detalhes](https://github.com/JOCASFODAS/JOCAS/releases/tag/wallpapers-v1.0.0) | CachyOS x64, KDE Plasma e Wayland. Não é uma versão universal para todas as distros/desktops. |
 
@@ -20,14 +20,19 @@ patches incrementais. Faça backup da instalação e das configurações antes d
 substituir arquivos. Os ZIPs de fontes também ficam na release de cada produto.
 [Confira os hashes SHA-256](distribuicao/SHA256SUMS.txt).
 
-## Correção no modificador 1.4.2
+## Correção no modificador 1.4.3
 
-Corrige cortes de voz sob carga de jogos no Linux: prioridade na tarefa de áudio,
-reserva de 200 ms para envio e escuta e recuperação da fala acumulada. Testes
-controlados com pausas de 150 ms passaram sem cortes; o usuário também confirmou
-voz normal com The Finals aberto. A reserva pode acrescentar cerca de 100 ms ao
-atraso anterior. Windows recompilado da mesma versão; WASAPI e validação em
-hardware Windows permanecem sem alteração.
+Protege os blocos de áudio no PipeWire enquanto o JOCAS estiver em uso. Os fluxos
+mantêm 1024 amostras por ciclo (21,3 ms a 48 kHz), evitando os prazos de 5,3 ms
+pedidos por jogos que usam 256 amostras. A proteção termina ao liberar os fluxos;
+não grava um tamanho global permanente. Pode acrescentar cerca de 16 ms ao ciclo
+e afetar clientes no mesmo grafo. A reserva de 200 ms e a prioridade da 1.4.2 foram
+mantidas.
+
+Testes completos do microfone virtual com consumidores concorrentes passaram sem
+cortes durante 30 segundos; o usuário confirmou voz normal com The Finals aberto.
+Windows recompilado da mesma versão, com WASAPI inalterado e hardware Windows
+sem validação. PulseAudio sem PipeWire ignora esta proteção de grafo.
 
 ## O que cada projeto faz
 
